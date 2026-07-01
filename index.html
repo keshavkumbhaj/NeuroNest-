@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroNest | Habit Tracking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+
+<body>
+    <div class="app-shell">
+
+        <header class="topbar">
+            <a href="#" class="brand" aria-label="NeuroNest home">
+                <span class="brand-icon">✦</span>
+                <span>NeuroNest</span>
+            </a>
+            <!-- NAVBAR STARTS  -->
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="#progress">Dashboard</a>
+                <a href="#progress">Progress</a>
+                <a href="#coach">AI Coach</a>
+            </nav>
+        </header>
+        <!-- NAVBAR ENDS -->
+
+        <!-- Body of the page -->
+        <main class="content">
+            <section class="hero card">
+                <div>
+                    <p class="eyebrow">Your calm, intelligent productivity space</p>
+                    <h1>Welcome back, Keshav.</h1>
+                    <p class="hero-copy">
+                        Small steps compound beautifully. Keep building the habits that
+                        shape your future.
+                    </p>
+                </div>
+
+                <div class="hero-meta">
+                    <p class="quote">“Consistency beats intensity.”</p>
+                    <p id="todayDate" class="date-pill"></p>
+                </div>
+            </section>
+
+            <section id="progress" class="dashboard-grid">
+                <article class="card progress-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Today’s momentum</p>
+                            <h2>Progress Overview</h2>
+                        </div>
+                    </div>
+
+                    <div id="progressRing" class="progress-ring" role="img" aria-label="0 percent of today's habits complete">
+                        <div class="progress-ring__inner">
+                            <span id="progressPercent" aria-hidden="true">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                            aria-valuenow="0" aria-label="Today's habit completion">
+                            <div id="progressBarFill" class="progress-bar__fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <strong id="streakValue">0</strong>
+                            <span>Current streak</span>
+                        </div>
+                        <div class="stat-box">
+                            <strong id="completedValue">0</strong>
+                            <span>Total completed</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card habits-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Daily rituals</p>
+                            <h2>Habits</h2>
+                        </div>
+                        <button id="addHabitBtn" class="ghost-btn" aria-haspopup="dialog">+ Add Habit</button>
+                    </div>
+
+                    <div id="habitList" class="habit-list" aria-live="polite"></div>
+                    <p id="habitEmptyState" class="empty-state" hidden>
+                        No habits yet. Add your first one to start building momentum.
+                    </p>
+                </article>
+            </section>
+
+            <section class="card reflection-card">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Mindful check-in</p>
+                        <h2>Reflection</h2>
+                    </div>
+                    <span id="reflectionStatus" class="save-status" aria-live="polite"></span>
+                </div>
+
+                <label class="sr-only" for="reflectionInput">Reflection input</label>
+                <textarea id="reflectionInput" rows="6" maxlength="1000"
+                    placeholder="How did your day go today?"></textarea>
+            </section>
+
+            <section id="coach" class="card ai-card">
+                <div class="ai-card__content">
+                    <div class="ai-icon" aria-hidden="true">🤖</div>
+                    <div>
+                        <p class="eyebrow">Personalized guidance</p>
+                        <h2>AI Coach</h2>
+                        <p id="coachMessage">
+                            Click “Generate Advice” to receive personalized AI feedback.
+                        </p>
+                    </div>
+                </div>
+                <button id="coachBtn" class="primary-btn">Generate Advice</button>
+            </section>
+
+            <section class="card weekly-card">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">This week</p>
+                        <h2>Weekly Progress</h2>
+                    </div>
+                </div>
+
+                <div id="chartPlaceholder" class="chart-placeholder" role="img" aria-label="Weekly progress chart">
+                </div>
+                <p id="chartSrText" class="sr-only"></p>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Habit modal -->
+    <div id="habitModalOverlay" class="modal-overlay" hidden>
+        <div id="habitModal" class="modal-card" role="dialog" aria-modal="true" aria-labelledby="habitModalTitle">
+            <div class="modal-header">
+                <h2 id="habitModalTitle">New habit</h2>
+                <button id="modalCloseBtn" class="icon-btn" aria-label="Close dialog">✕</button>
+            </div>
+
+            <form id="habitForm" novalidate>
+                <div class="field">
+                    <label for="habitNameInput">Habit name</label>
+                    <input id="habitNameInput" name="name" type="text" maxlength="40" placeholder="e.g. Drink water"
+                        required autocomplete="off" />
+                </div>
+
+                <div class="field">
+                    <label for="habitCategoryInput">Category</label>
+                    <input id="habitCategoryInput" name="category" type="text" maxlength="24"
+                        placeholder="e.g. Wellbeing" autocomplete="off" />
+                </div>
+
+                <div class="field">
+                    <label for="habitIconInput">Icon</label>
+                    <input id="habitIconInput" name="icon" type="text" maxlength="2" placeholder="✨"
+                        autocomplete="off" />
+                </div>
+
+                <p id="habitFormError" class="form-error" role="alert" hidden></p>
+
+                <div class="modal-actions">
+                    <button type="button" id="modalCancelBtn" class="secondary-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Add habit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

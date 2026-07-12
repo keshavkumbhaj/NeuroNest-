@@ -17,6 +17,7 @@ from flask import Blueprint, jsonify, request
 
 from database import db
 from models import Habit, DailyCompletion, Reflection
+from ai_engine import generate_response
 
 # All routes in this file are prefixed with /api automatically.
 routes_bp = Blueprint("routes_bp", __name__, url_prefix="/api")
@@ -216,7 +217,53 @@ def get_reflection():
 # ---------------------------------------------------------------------
 @routes_bp.route("/coach", methods=["POST"])
 def generate_coach_advice():
-    return jsonify({
-        "success": True,
-        "message": "AI coach integration coming soon."
-    }), 200
+    data = request.get_json(silent=True) or {}
+
+    reflection = (data.get("reflection") or "").strip()
+    habits = data.get("habits") or []
+
+    try:
+        completed_habits = [
+            h.get("name", "") for h in habits if h.get("completed")
+        ]
+        pending_habits = [
+            h.get("name", "") for h in habits if not h.get("completed")
+        ]
+
+        prompt = (
+            "You are NeuroNest, a warm, supportive, motivating habit coach.\n\n"
+            f"Habits completed today: {', '.join(completed_habits) if completed_habits else 'none'}.\n"
+            f"Habits still pending: {', '.join(pending_habits) if pending_habits else 'none'}.\n"
+        )
+
+        if reflection:
+            prompt += f'Reflection: "{reflection}"\n'
+
+        prompt += (
+            "\nRespond in under 150 words.\n"
+            "Encourage the user.\n"
+            "Comment on their reflection.\n"
+            "Give 2 practical suggestions.\n"
+            "Do not use markdown.\n"
+        )
+
+        advice = generate_response(prompt)
+
+        return jsonify({
+            "success": True,
+            "data": {
+                "advice": advice
+            }
+        }), 200
+
+    except RuntimeError as error:
+        return jsonify({
+            "success": False,
+            "error": str(error)
+        }), 503
+
+    except Exception as error:
+        return jsonify({
+            "success": False,
+            "error": str(error)
+        }), 500

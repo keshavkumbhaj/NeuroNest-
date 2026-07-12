@@ -1,0 +1,14 @@
+# Environment variables
+Backend/.env
+
+# Python cache
+Backend/__pycache__/
+**/__pycache__/
+*.pyc
+
+# AI model
+Backend/models_gguf/
+*.gguf
+
+# llama.cpp binaries
+Backend/llama.cpp/

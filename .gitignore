@@ -12,3 +12,9 @@ Backend/models_gguf/
 
 # llama.cpp binaries
 Backend/llama.cpp/
+
+# instance database 
+Backend/instance/
+
+# React
+neuronest-react/node_modules/

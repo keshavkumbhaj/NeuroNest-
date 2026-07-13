@@ -1,7 +1,19 @@
-import HabitCard from './HabitCard.jsx';
+import { useState } from "react";
+import HabitCard from "./HabitCard.jsx";
 
 function HabitsList({ habits, onToggle, onDelete, onAddClick }) {
   const hasHabits = habits.length > 0;
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const categories = [
+    "All",
+    ...new Set(habits.map((habit) => habit.category)),
+  ];
+  const filteredHabits =
+    selectedCategory === "All"
+      ? habits
+      : habits.filter(
+        (habit) => habit.category === selectedCategory
+      );
 
   return (
     <article className="card habits-card">
@@ -18,9 +30,24 @@ function HabitsList({ habits, onToggle, onDelete, onAddClick }) {
           + Add Habit
         </button>
       </div>
+      <div className="filter-bar">
+        {categories.map((category) => (
+          <button
+            key={category}
+            className={
+              selectedCategory === category
+                ? "filter-btn active"
+                : "filter-btn"
+            }
+            onClick={() => setSelectedCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
 
       <div className="habit-list" aria-live="polite">
-        {habits.map((habit) => (
+        {filteredHabits.map((habit) => (
           <HabitCard
             key={habit.id}
             habit={habit}

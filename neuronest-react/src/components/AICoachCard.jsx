@@ -31,10 +31,21 @@ function AICoachCard({ habits, reflection }) {
       <div className="ai-card__content">
         <div className="ai-icon" aria-hidden="true">🤖</div>
         <div>
-          <p className="eyebrow">Personalized guidance</p>
-          <h2>AI Coach</h2>
-          <p>{message}</p>
-        </div>
+  <p className="eyebrow">Personalized guidance</p>
+  <h2>AI Coach</h2>
+
+  {isLoading && (
+    <div className="ai-loading">
+      <div className="spinner"></div>
+      <div>
+        <p><strong>AI Coach is thinking...</strong></p>
+        <small>Running locally. This usually takes 10–15 seconds.</small>
+      </div>
+    </div>
+  )}
+
+  {!isLoading && <p>{message}</p>}
+</div>
       </div>
       <button className="primary-btn" onClick={handleGenerateAdvice} disabled={isLoading}>
         {isLoading ? 'Generating…' : 'Generate Advice'}

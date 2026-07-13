@@ -1,3 +1,4 @@
+import quotes from "../data/quotes";
 import { useEffect, useState } from 'react';
 import { formatLongDate } from '../utils/habitUtils.js';
 
@@ -7,6 +8,8 @@ function Hero() {
   useEffect(() => {
     setTodayLabel(formatLongDate(new Date()));
   }, []);
+  const day = new Date().getDate();
+  const todaysQuote = quotes[day % quotes.length];
 
   return (
     <section className="hero card">
@@ -20,7 +23,7 @@ function Hero() {
       </div>
 
       <div className="hero-meta">
-        <p className="quote">"Consistency beats intensity."</p>
+        <p className="quote">"{todaysQuote}"</p>
         <p className="date-pill">{todayLabel}</p>
       </div>
     </section>

@@ -7,6 +7,7 @@ import HabitModal from './components/HabitModal.jsx';
 import ReflectionCard from './components/ReflectionCard.jsx';
 import AICoachCard from './components/AICoachCard.jsx';
 import WeeklyChart from './components/WeeklyChart.jsx';
+import confetti from "canvas-confetti";
 import {
   fetchHabits,
   createHabit,
@@ -24,6 +25,7 @@ function App() {
   const [progress, setProgress] = useState({ completed: 0, total: 0, percentage: 0 });
   const [reflection, setReflection] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
+  const [alreadyCelebrated, setAlreadyCelebrated] = useState(false);
 
   // The Weekly Chart and streak still run on mock data — there's no
   // /api/history endpoint yet, so this stays static for now rather than
@@ -62,6 +64,23 @@ function App() {
       ]);
       setHabits(habitsData);
       setProgress(progressData);
+      if (
+        progressData.total > 0 &&
+        progressData.completed === progressData.total &&
+        !alreadyCelebrated
+      ) {
+        confetti({
+          particleCount: 150,
+          spread: 90,
+          origin: { y: 0.7 },
+        });
+
+        setAlreadyCelebrated(true);
+      }
+
+      if (progressData.completed !== progressData.total) {
+        setAlreadyCelebrated(false);
+      }
     } catch (error) {
       console.error('Failed to refresh habits/progress:', error);
     }

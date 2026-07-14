@@ -207,6 +207,9 @@ def _extract_response(raw_output: str, prompt: str) -> str:
         idx += 1
 
     response_lines = remaining_lines[idx:]
+    # Remove the truncated prompt continuation line that llama.cpp prints.
+    while response_lines and response_lines[0].strip().endswith("(truncated)"):
+        response_lines.pop(0)
 
     # Remove trailing junk: timing stats ("[ Prompt: ... ]") and the
     # final "Exiting..." line llama-cli prints on shutdown.

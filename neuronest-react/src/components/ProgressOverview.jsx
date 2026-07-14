@@ -46,7 +46,7 @@ function ProgressOverview({ completedCount, percentage, streak }) {
 
       <div className="stats-grid">
         <div className="stat-box">
-          <strong>{streak}</strong>
+          <strong>1</strong>
           <span>Current streak</span>
         </div>
         <div className="stat-box">

@@ -15,7 +15,7 @@ function Hero() {
     <section className="hero card">
       <div>
         <p className="eyebrow">Your calm, intelligent productivity space</p>
-        <h1>Welcome back, Keshav.</h1>
+        <h1>Welcome back! 👋</h1>
         <p className="hero-copy">
           Small steps compound beautifully. Keep building the habits that
           shape your future.

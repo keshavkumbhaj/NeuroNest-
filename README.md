@@ -141,6 +141,10 @@ Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+
+If you don't already have the Qwen2.5-3B GGUF model, download it and place it inside:
+
+Backend/models_gguf/
 ```
 
 Create a `.env` file:
@@ -193,7 +197,6 @@ http://localhost:5173
 
 # 📂 Project Structure
 
-```
 NeuroNest
 │
 ├── Backend
@@ -203,18 +206,30 @@ NeuroNest
 │   ├── config.py
 │   ├── database.py
 │   ├── models.py
-│   └── ...
+│   ├── requirements.txt
+│   ├── models_gguf/
+│   │   └── qwen2.5-3b-instruct.Q4_K_M.gguf
+│   └── llama.cpp/
 │
 ├── neuronest-react
-│   ├── src
-│   ├── public
+│   ├── src/
+│   ├── public/
 │   ├── package.json
 │   └── ...
 │
-└── README.md
-```
-
----
+├── screenshots/
+│   ├── dashboard.png
+│   ├── ai-coach.png
+│   ├── habits.png
+│   ├── progress.png
+│   └── reflection.png
+│
+├── README.md
+├── ARCHITECTURE.md
+├── TECHNICAL_REPORT.md
+├── PRIVACY.md
+├── ATTRIBUTION.md
+└── LICENSE
 
 # 📸 Demo and Screenshots
 

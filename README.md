@@ -220,7 +220,10 @@ NeuroNest
 
 ## Demo Video
 
-*Will be added before the final submission.*
+## 🎥 Demo Video
+
+Watch the demo here:
+https://youtu.be/1R99hM6Trjk
 
 ## Screenshots
 
